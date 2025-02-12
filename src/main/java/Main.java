@@ -6,7 +6,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String filename = "transactions.csv";
 
-        // メニュー表示
+        // 初回起動時のメニュー表示
         while (true) {
             System.out.println("\n1. 取引を追加");
             System.out.println("2. 取引を表示");
@@ -14,25 +14,19 @@ public class Main {
             System.out.println("4. 終了");
             System.out.print("番号を入力してください: ");
 
-            // 標準入力がない場合の対策
-            if (!scanner.hasNextLine()) {
-                System.out.println("標準入力がありません。プログラムを終了します。");
-                break;
-            }
-
-            // 数値の入力チェック
-            String input = scanner.nextLine().trim();
-            if (!input.matches("\\d+")) {
+            if (!scanner.hasNextInt()) {  // ユーザーが数値を入力しなかった場合の対策
                 System.out.println("無効な入力です。数値を入力してください。");
+                scanner.next();  // バッファをクリア
                 continue;
             }
 
-            int choice = Integer.parseInt(input);
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // 改行を消す
 
             switch (choice) {
                 case 1:
                     System.out.print("金額を入力: ");
-                    while (!scanner.hasNextInt()) {
+                    while (!scanner.hasNextInt()) { 
                         System.out.println("無効な入力です。数値を入力してください。");
                         scanner.next();
                     }
@@ -71,6 +65,6 @@ public class Main {
                     System.out.println("無効な選択です。1〜4の数字を入力してください。");
             }
         }
-        scanner.close();
     }
 }
+
